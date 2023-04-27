@@ -1,5 +1,6 @@
 // DEPENDENCIES
 const express = require('express')
+const mongoose = require('mongoose')
 
 // CONFIGURATION
 require('dotenv').config()
@@ -21,7 +22,9 @@ app.get('/', (req, res) => {
   const breadsController = require('./controllers/breads_controller.js')
   app.use('/breads', breadsController)
   
-
+  mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true})
+  .then(() => { console.log('connected to mongo: ', process.env.MONGO_URI) })
+  
 // LISTEN
 app.listen(PORT, () => {
   console.log('listening on port', PORT);
